@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <!--== Start Page Header Area ==-->
+    <div class="page-header-wrap bg-img" data-bg="/static/img/bg/page-header-bg.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="page-header-content">
+                        <div class="page-header-content-inner">
+                            <h1>Checkout</h1>
+                            <ul class="breadcrumb">
+                                <li><a href="/index/">Home</a></li>
+                                <li><a href="/shop/">Shop</a></li>
+                                <li class="current"><a href="#">Checkout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Page Header Area ==-->
+
+    <!--== Start Page Content Wrapper ==-->
+    <div class="page-content-wrapper sp-y">
+        <div class="cart-page-content-wrap">
+            <div class="container container-wide">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="checkout-page-coupon-area">
+                            <!-- Checkout Coupon Accordion Start -->
+                            <div class="checkoutAccordion" id="checkOutAccordion">
+                                <div class="card">
+                                    <h3><i class="fa fa-info-circle"></i> Have a Coupon? <span data-toggle="collapse" data-target="#couponaccordion">
+                                    Click here to Enter your Code</span>
+                                    </h3>
+                                    <div id="couponaccordion" class="collapse" data-parent="#checkOutAccordion">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-lg-8">
+                                                    <div class="apply-coupon-wrapper">
+                                                        <p>If you have a coupon code, please apply it below.</p>
+                                                        <form action="#" method="post">
+                                                            <div class="row">
+                                                                <div class="col-md-8">
+                                                                    <div class="input-item mt-0">
+                                                                        <input type="text" placeholder="Enter Your Coupon Code" required />
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-4 mt-20 mt-md-0">
+                                                                    <button class="btn btn-bordered">Apply Coupon</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Checkout Coupon Accordion End -->
+                        </div>
+                    </div>
+                </div>
+<form action="." method="POST" class="order-form">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!-- Checkout Form Area Start -->
+                        <div class="checkout-billing-details-wrap">
+                            <h2>Billing Details</h2>
+                            <div class="billing-form-wrap">
+                                    <div class="input-item">
+                                        {{ form.as_p }}
+                                    </div>
+                                    <div class="checkout-box-wrap">
+                                        <div class="input-item">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="create_pwd">
+                                                <label class="custom-control-label" for="create_pwd">Create an account?</label>
+                                            </div>
+                                        </div>
+                                        <div class="account-create single-form-row">
+                                            <p>Create an account by entering the information below. If you are a returning
+                                                customer please login at the top of the page.</p>
+                                            <div class="input-item">
+                                                <label for="pwd" class="sr-only required">Account Password</label>
+                                                <input type="password" id="pwd" placeholder="Account Password"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-item">
+                                        <label for="ordernote" class="sr-only">Order Note</label>
+                                        <textarea name="ordernote" id="ordernote" cols="30" rows="3" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-xl-5 ml-auto">
+                        <!-- Checkout Page Order Details -->
+                        <div class="order-details-area-wrap">
+                            <h2>Your Order</h2>
+
+                            <div class="order-details-table table-responsive">
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th>Products</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in cart %}
+                                        {% with product=item.product %}
+                                        <tr class="cart-item">
+                                            <td><span class="product-title">{{ product.name }}</span> <span
+                                            class="product-quantity">&#215;  {{ item.quantity }}</span></td>
+                                            <td>${{ product.price }}</td>
+                                        </tr>
+                                    {% endwith %}
+                                    {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="cart-subtotal">
+                                            <th>Subtotal</th>
+                                            <td>${{ cart.get_total_price }}</td>
+                                        </tr>
+                                        <tr class="shipping">
+                                            <th>Shipping</th>
+                                            <td>
+                                                <ul class="shipping-method">
+                                                    <li>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" id="flat_shipping" name="shipping_method" class="custom-control-input"  />
+                                                            <label class="custom-control-label" for="flat_shipping">Flat Rate :
+                                                                $10</label>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" id="free_shipping" name="shipping_method" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="free_shipping">Free
+                                                                Shipping</label>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" id="cod_shipping" name="shipping_method" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="cod_shipping">Cash on
+                                                                Delivery</label>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr class="final-total">
+                                            <th>Total</th>
+                                            <td><span class="total-amount">${{ cart.get_total_price }}</span></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div class="order-details-footer">
+                                <p>Your personal data will be used to process your order, support your experience throughout
+                                    this website, and for other purposes described in our
+                                    <a href="#" class="text-warning">privacy policy</a>.</p>
+                                <div class="custom-control custom-checkbox mt-10">
+                                    <input type="checkbox" id="privacy" class="custom-control-input"  />
+                                    <label for="privacy" class="custom-control-label">I have read and agree to the website
+                                        terms
+                                        and conditions</label>
+                                </div>
+
+
+                                <p><input class="btn btn-bordered mt-40" type="submit" value="Place order"></p>
+                                    {% csrf_token %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</form>
+            </div>
+        </div>
+    </div>
+    <!--== End Page Content Wrapper ==-->
+{% endblock %}
